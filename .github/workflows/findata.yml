@@ -17,8 +17,9 @@ jobs:
       with:
         python-version: '3.11'
     - name: Install dependencies
-      run: pip install wheel
-      run: pip install -r financial_india_data/requirements.txt
+      run: |
+        pip install wheel
+        pip install -r financial_india_data/requirements.txt
     - name: Build package
       run: python financial_india_data/setup.py bdist_wheel
     - uses: actions/upload-artifact@v2
