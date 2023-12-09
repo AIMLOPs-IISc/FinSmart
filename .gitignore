@@ -1,10 +1,12 @@
 api/financial_india_data-1.0.0-py3-none-any.whl
-models/
+financial_sentiment_distilBERT/
+Checkpoints/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 
+*.whl
 # C extensions
 *.so
 
