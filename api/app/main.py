@@ -6,12 +6,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from findata import NSE, News
-import pandas as pd
-from finbert import distil_bert
+from finbert import FinSentiment
 
 _nse = NSE()
 _news = News()
-senti_class = distil_bert.FinSentiment()
+senti_class = FinSentiment()
 
 async def get_mood(news):
     mood = 0
