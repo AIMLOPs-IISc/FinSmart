@@ -1,0 +1,26 @@
+name: FIN DATA CI Pipeline
+on:
+    workflow_run:
+        workflows: ["CT Pipeline"]
+        types:
+          - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: pip install -r financial_india_data/requirements.txt
+    - name: Build package
+      run: python setup.py bdist_wheel
+    - uses: actions/upload-artifact@v2
+      with:
+        name: findata-package
+        path: financial_india_data/dist/*.whl
