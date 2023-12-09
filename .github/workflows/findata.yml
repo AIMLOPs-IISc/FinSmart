@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: pip install -r financial_india_data/requirements.txt
     - name: Build package
-      run: python setup.py bdist_wheel
+      run: python financial_india_data/setup.py bdist_wheel
     - uses: actions/upload-artifact@v2
       with:
         name: findata-package
