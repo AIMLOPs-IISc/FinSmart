@@ -1,0 +1,50 @@
+{% extends "base.j2" %}
+{% block content %}
+<div class="analysis">
+<div class="row">
+<div class="col s12">
+  <div class="row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">assessment</i>
+      <input type="text" id="symbol-input" class="autocomplete">
+      <label for="symbol-input">NSE Ticker Symbol</label>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div id='pred_div'><!-- Plotly chart will be drawn inside this DIV --></div>
+<h4 id="company-name">News For: {{ name }}</h4>
+    <div id='senti_div'><!-- Plotly chart will be drawn inside this DIV --></div>
+<div class="row">
+{% for key in news %}
+    <div class="col s12 m6 l4">
+      <div class="card small cyan lighten-4">
+          <div class="card-content blue-text text-darken-2">
+              <span class="card-title" id="news-date-{{ key['srno'] }}">{{ key['date']}}</span>
+                <p id="headline-{{ key['srno'] }}">{{ key['title'] }}</p>
+          </div>
+          <div class="card-action">
+            <a href="{{ key['link'] }}" target="_blank" id="news-link-{{ key['srno'] }}">{{ key['media'] }}</a>
+              {% if key['label']=="Positive" %}
+                    <span class="new badge" data-badge-caption="">{{ key['label'] }}</span>
+              {% elif key['label']=="Negative" %}
+                    <span class="new badge red" data-badge-caption="">{{ key['label'] }}</span>
+              {% else %}
+                    <span class="new badge gray" data-badge-caption="">{{ key['label'] }}</span>
+              {% endif %}
+          </div>
+      </div>
+    </div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
+
+{% block additional_js %}
+<script>
+
+</script>
+
+{% endblock %}

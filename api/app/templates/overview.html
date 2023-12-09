@@ -1,0 +1,27 @@
+{% extends "base.j2" %}
+{% block content %}
+
+{% for key in highlights %}
+    <h3>{{ key.replace("_", " ").title() }}</h3>
+      <table>
+        <thead>
+          <tr>
+              {% for name in highlights[key].columns %}
+                <th>{{name}}</th>
+              {% endfor %}
+          </tr>
+        </thead>
+
+        <tbody>
+            {% for _,row in highlights[key].iterrows() %}
+                <tr>
+                    {% for data in row %}
+                        <td>{{ data }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+{% endfor %}
+
+{% endblock %}

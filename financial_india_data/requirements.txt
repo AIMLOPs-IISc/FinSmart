@@ -1,0 +1,4 @@
+# Data
+pandas~=2.1.3
+#news
+GoogleNews~=1.6.11
