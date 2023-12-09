@@ -1,9 +1,9 @@
 name: FIN DATA CI Pipeline
 on:
-    workflow_run:
-        workflows: ["CT Pipeline"]
-        types:
-          - completed
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   build:
