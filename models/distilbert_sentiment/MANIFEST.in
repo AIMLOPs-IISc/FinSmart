@@ -1,0 +1,21 @@
+include *.csv
+include *.json
+include *.bin
+recursive-include ./src/*
+
+include ./src/data/FinancialNews_India_Sentiment.csv
+include ./src/financial_sentiment_distilBERT/*.json
+include ./src/financial_sentiment_distilBERT/*.safetensors
+include ./src/financial_sentiment_distilBERT/*.bin
+include ./src/financial_sentiment_distilBERT/*.txt
+include ./src/VERSION
+
+include ./requirements.txt
+include ./LICENSE
+include ./README.md
+exclude *.log
+exclude *.cfg
+
+recursive-exclude * __pycache__
+recursive-exclude * Checkpoints
+recursive-exclude * *.py[co]

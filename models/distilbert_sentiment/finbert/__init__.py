@@ -1,0 +1,1 @@
+from .distil_bert import FinSentiment
