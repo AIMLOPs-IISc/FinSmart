@@ -25,10 +25,16 @@ about = {}
 ROOT_DIR = Path(__file__).resolve().parent
 print(ROOT_DIR)
 PACKAGE_DIR = ROOT_DIR / 'findata'
-with open(PACKAGE_DIR / "VERSION") as f:
+with open(PACKAGE_DIR / "VERSION" , 'r') as f:
     _version = f.read().strip()
+    _verlist = _version.split(".")
+    last = str(int(_verlist[-1])+1)
+    _verlist[-1] = last
+    _version = ".".join(_verlist)
     about["__version__"] = _version
 
+with open(PACKAGE_DIR / "VERSION" , 'w') as f:
+    f.write(about["__version__"])
 
 # What packages are required for this module to be executed?
 def list_reqs(fname="requirements.txt"):
