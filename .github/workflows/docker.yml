@@ -20,12 +20,12 @@ jobs:
     - uses: actions/download-artifact@v2
         with:
           name: findata-package
-      run: mv *.whl api/*.whl
+    - run: mv *.whl api
 
     - uses: actions/download-artifact@v2
         with:
           name: finbert-package
-      run: mv *.whl api.*.whl
+    - run: mv *.whl api.*.whl
 
     - name: Install dependencies
       run: |
