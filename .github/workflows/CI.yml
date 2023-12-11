@@ -25,7 +25,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: finsenti-package
-        path: models/distilbert_sentiment/dist/*.whl
+        path: dist/*.whl
 
   data_build:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: findata-package
-          path: financial_india_data/dist/*.whl
+          path: dist/*.whl
 
   docker_build:
     needs: ["data_build", "bert_build"]
