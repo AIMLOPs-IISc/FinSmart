@@ -106,7 +106,7 @@ class NSE:
                 current_end_date = start_date_t
                 start_end_batch.append((start_date_t.strftime("%d-%m-%Y"),end_date_t.strftime("%d-%m-%Y")))
             for fetch_batch in start_end_batch:
-                url = 'api/historical/cm/equity?symbol=' + symbol + '&series=["' + series + '"]&from=' + fetch_batch[0] + '&to=' + fetch_batch[1]
+                url = '/api/historical/cm/equity?symbol=' + symbol + '&series=["' + series + '"]&from=' + fetch_batch[0] + '&to=' + fetch_batch[1]
                 df = self.nsefetch(url)
                 columns = [
                     "CH_TIMESTAMP",

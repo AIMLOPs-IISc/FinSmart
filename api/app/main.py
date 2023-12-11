@@ -25,8 +25,8 @@ async def get_mood(news):
     return mood / count
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -103,4 +103,4 @@ async def get_ticker_suggestion(request: Request, symbol: str):
     return JSONResponse(content=content)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

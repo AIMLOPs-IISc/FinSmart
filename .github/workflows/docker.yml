@@ -1,0 +1,33 @@
+name: FIN Smart Docker Pipeline
+on:
+  workflow_run:
+    workflows: [ "FIN BERT CI Pipeline", "FIN DATA CI Pipeline"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+
+    - uses: actions/download-artifact@v2
+        with:
+          name: findata-package
+        run: mv *.whl api/*.whl
+
+    - uses: actions/download-artifact@v2
+        with:
+          name: finbert-package
+      run: mv *.whl api.*.whl
+
+    - name: Install dependencies
+      run: |
+        pip install wheel
+        pip install -r api/requirements.txt

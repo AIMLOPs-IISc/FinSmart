@@ -15,5 +15,5 @@ torch~=2.1.1
 datasets~=2.15.0
 scikit-learn
 #Local Libraries
-financial_india_data
-financial_sentiment_distilBERT
+financial_india_data-1.0.1-py3-none-any.whl
+financial_sentiment_distilBERT-1.0.3-py3-none-any.whl
