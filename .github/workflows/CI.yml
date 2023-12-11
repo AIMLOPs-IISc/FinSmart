@@ -63,10 +63,12 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: findata-package
+        run: mv *.whl api/
 
       - uses: actions/download-artifact@v2
         with:
           name: finsenti-package
+        run: mv *.whl api/
 
       - name: Login to Docker hub
         env:
