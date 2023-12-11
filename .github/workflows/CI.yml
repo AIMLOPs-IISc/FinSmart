@@ -1,0 +1,76 @@
+name: FIN BERT CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  bert_build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+    - name: Install dependencies
+      run: |
+        pip install wheel
+        pip install -r models/distilbert_sentiment/requirements.txt
+    - name: Build package
+      run: python models/distilbert_sentiment/setup.py bdist_wheel
+    - uses: actions/upload-artifact@v2
+      with:
+        name: finsenti-package
+        path: models/distilbert_sentiment/dist/*.whl
+
+  data_build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install wheel
+          pip install -r financial_india_data/requirements.txt
+      - name: Build package
+        run: python financial_india_data/setup.py bdist_wheel
+      - uses: actions/upload-artifact@v2
+        with:
+          name: findata-package
+          path: financial_india_data/dist/*.whl
+
+  docker_build:
+    needs: ["data_build", "bert_build"]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: findata-package
+      - run: mv *.whl api/
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: finbert-package
+      - run: mv *.whl api/
+
+      - name: Install dependencies
+        run: |
+          pip install wheel
+          pip install -r api/requirements.txt
