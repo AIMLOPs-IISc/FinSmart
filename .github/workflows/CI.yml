@@ -12,10 +12,10 @@ jobs:
       fail-fast: false
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.11
+    - name: Set up Python 3.9
       uses: actions/setup-python@v3
       with:
-        python-version: '3.9.4'
+        python-version: '3.9'
     - name: Install dependencies
       run: |
         pip install wheel
@@ -33,10 +33,10 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.11
+      - name: Set up Python 3.9
         uses: actions/setup-python@v3
         with:
-          python-version: '3.9.4'
+          python-version: '3.9'
       - name: Install dependencies
         run: |
           pip install wheel
@@ -55,7 +55,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.11
+      - name: Set up Python 3.9
         uses: actions/setup-python@v3
         with:
           python-version: '3.9.4'
