@@ -6,7 +6,7 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 # Package meta-data.
-NAME = 'financial_india_data'
+NAME = 'findata'
 DESCRIPTION = "Gathering Data for India"
 EMAIL = "------"
 AUTHOR = "----------"

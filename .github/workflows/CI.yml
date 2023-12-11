@@ -19,9 +19,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install wheel
-        pip install -r models/distilbert_sentiment/requirements.txt
+        pip install -r models/finbert/requirements.txt
     - name: Build package
-      run: python models/distilbert_sentiment/setup.py bdist_wheel
+      run: python models/finbert/setup.py bdist_wheel
     - uses: actions/upload-artifact@v2
       with:
         name: finsenti-package
@@ -40,9 +40,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install wheel
-          pip install -r financial_india_data/requirements.txt
+          pip install -r findata/requirements.txt
       - name: Build package
-        run: python financial_india_data/setup.py bdist_wheel
+        run: python findata/setup.py bdist_wheel
       - uses: actions/upload-artifact@v2
         with:
           name: findata-package
