@@ -67,7 +67,7 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: finbert-package
+          name: finsenti-package
       - run: mv *.whl api/
 
       - name: Install dependencies
