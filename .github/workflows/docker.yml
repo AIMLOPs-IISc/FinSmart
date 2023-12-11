@@ -20,7 +20,7 @@ jobs:
     - uses: actions/download-artifact@v2
         with:
           name: findata-package
-        run: mv *.whl api/*.whl
+      run: mv *.whl api/*.whl
 
     - uses: actions/download-artifact@v2
         with:
