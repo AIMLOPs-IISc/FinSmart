@@ -6,7 +6,7 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 # Package meta-data.
-NAME = 'financial_sentiment_distilBERT'
+NAME = 'finbert'
 DESCRIPTION = "Analyse sentiment of a sentence related to Financial market."
 EMAIL = "------"
 AUTHOR = "----------"
