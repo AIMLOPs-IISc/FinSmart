@@ -1,7 +1,7 @@
 name: FIN Smart Docker Pipeline
 on:
   workflow_run:
-    workflows: [ "FIN BERT CI Pipeline", "FIN DATA CI Pipeline"]
+    workflows: ["data_build", "bert_build"]
     types:
       - completed
 
