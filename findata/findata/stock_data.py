@@ -52,12 +52,15 @@ class NSE:
         return "na"
 
     def nsefetch(self, url):
+        print("Calling NSE", self.__base_url__ + url)
         try:
             data = self.__session__.get(self.__base_url__ + url, headers=self.__headers__)
             resp = data.json()
             df = pd.DataFrame.from_records(resp["data"])
+            print("Success")
         except:
             df = pd.DataFrame()
+            print("Fail")
         return df
 
 
@@ -128,6 +131,8 @@ class NSE:
 
     def highlights(self, count=5):
         df = self.nsefetch('/api/equity-stockIndices?index=SECURITIES%20IN%20F%26O')
+        if len(df) == 0:
+            return {}
         df = df[["symbol", "open", "dayHigh", "dayLow", "lastPrice", "totalTradedVolume", "totalTradedValue", "pChange", 'yearHigh', 'yearLow']]
         loosers = df.sort_values(by="pChange").head(count)
         gainers = df.sort_values(by="pChange", ascending=False).head(count)
