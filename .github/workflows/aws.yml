@@ -40,6 +40,10 @@ jobs:
       with:
         name: finsenti-package
         path: models/finbert/dist/*.whl
+    - uses: actions/download-artifact@v3
+        with:
+        name: finsenti-package
+    - run: mv *.whl api/
         
   data_build:
     runs-on: ubuntu-latest
@@ -63,3 +67,7 @@ jobs:
         with:
           name: findata-package
           path: findata/dist/*.whl
+      - uses: actions/download-artifact@v3
+          with:
+          name: findata-package
+      - run: mv *.whl api/
