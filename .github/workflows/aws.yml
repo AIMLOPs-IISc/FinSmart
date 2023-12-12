@@ -41,7 +41,7 @@ jobs:
         name: finsenti-package
         path: models/finbert/dist/*.whl
     - uses: actions/download-artifact@v3
-        with:
+      with:
         name: finsenti-package
     - run: mv *.whl api/
         
