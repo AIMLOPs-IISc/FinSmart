@@ -62,6 +62,7 @@ async def get_ticker_suggestion(request: Request):
 @app.get("/prediction/api/news/{symbol}", response_class=JSONResponse)
 async def read_item(request: Request, symbol: str):
     name = _nse.company(symbol)
+    print(name)
     if name != "na":
         news = _news.get_headlines(name, 9, senti_class.predict)
     else:
@@ -76,9 +77,9 @@ async def read_item(request: Request, symbol: str):
                 'label':"na"
             }
         ]
-
+    print(news)
     mood = await get_mood(news)
-
+    print(mood)
     res = {
         "name": name,
         "mood":mood,
