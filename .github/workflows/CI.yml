@@ -17,11 +17,13 @@ jobs:
       with:
         python-version: '3.11'
     - name: Install dependencies
+      working-directory: ./models/finbert
       run: |
-        pip install wheel
-        pip install -r models/finbert/requirements.txt
+        pip install --upgrade build
+        pip install -r requirements.txt
     - name: Build package
-      run: python models/finbert/setup.py bdist_wheel
+      working-directory: ./models/finbert
+      run: python -m build
     - uses: actions/upload-artifact@v3
       with:
         name: finsenti-package
@@ -38,11 +40,13 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
+        working-directory: ./findata
         run: |
-          pip install wheel
-          pip install -r findata/requirements.txt
+          pip install --upgrade build
+          pip install -r requirements.txt
       - name: Build package
-        run: python findata/setup.py bdist_wheel
+        working-directory: ./findata
+        run: python -m build
       - uses: actions/upload-artifact@v3
         with:
           name: findata-package
