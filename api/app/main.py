@@ -13,9 +13,13 @@ app = FastAPI()
 app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
+print("initializing NSE")
 _nse = NSE()
+print("Initializing News")
 _news = News()
+print("Initializing Sentiment analysis")
 senti_class = distil_bert.FinSentiment()
+print("Initialization Process Complete")
 
 async def get_mood(news):
     mood = 0
@@ -35,7 +39,9 @@ async def read_item(request: Request):
 
 @app.get("/overview", response_class=HTMLResponse)
 async def get_overview(request:Request):
+    print("called")
     hl = _nse.highlights(5)
+    print("data_return")
     return templates.TemplateResponse("overview.html", {"request": request, "highlights":hl})
 
 @app.get("/prediction", response_class=HTMLResponse)
@@ -82,7 +88,6 @@ async def read_item(request: Request, symbol: str):
         "mood": mood,
         "news": news
     }
-    print(res)
     content = jsonable_encoder(res)
     return JSONResponse(content=content)
 
