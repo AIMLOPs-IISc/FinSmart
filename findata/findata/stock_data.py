@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 from datetime import datetime, timedelta
 import shutil
+from requests.exceptions import ConnectTimeout
 
 class NSE:
     def __init__(self):
@@ -21,7 +22,9 @@ class NSE:
             'Sec-Fetch-Site': 'none',
             'Sec-Fetch-Mode': 'navigate',
             'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'en-US,en;q=0.9,hi;q=0.8'
+            'Accept-Language': 'en-US,en;q=0.9,hi;q=0.8',
+            'x-requested-with': 'XMLHttpRequest',
+            'referer': 'https://www.nseindia.com/get-quotes/equity?symbol=COALINDIA'
         }
         self.__session__ = requests.session()
         #set cookies
@@ -54,13 +57,13 @@ class NSE:
     def nsefetch(self, url):
         print("Calling NSE", self.__base_url__ + url)
         try:
-            data = self.__session__.get(self.__base_url__ + url, headers=self.__headers__)
+            data = self.__session__.get(self.__base_url__ + url, headers=self.__headers__, timeout=5)
             resp = data.json()
             df = pd.DataFrame.from_records(resp["data"])
             print("Success")
-        except:
+        except ConnectTimeout:
             df = pd.DataFrame()
-            print("Fail")
+            print("Fail - Timeout")
         return df
 
 
