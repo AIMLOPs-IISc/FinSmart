@@ -72,7 +72,7 @@ jobs:
 
   docker_build:
     needs: ["data_build", "bert_build"]
-    runs-on: ubuntu-latest
+    runs-on: production
     strategy:
       fail-fast: false
     steps:
