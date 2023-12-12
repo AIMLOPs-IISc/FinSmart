@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 from datetime import datetime, timedelta
 import shutil
-from requests.exceptions import ConnectTimeout
+from requests.exceptions import ConnectTimeout, JSONDecodeError
 
 class NSE:
     def __init__(self):
@@ -64,6 +64,9 @@ class NSE:
         except ConnectTimeout:
             df = pd.DataFrame()
             print("Fail - Timeout")
+        except JSONDecodeError:
+            df = pd.DataFrame()
+            print("Fail - JSON Decode")
         return df
 
 
