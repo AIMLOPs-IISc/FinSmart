@@ -8,6 +8,11 @@ from fastapi.responses import JSONResponse
 from findata import NSE, News
 from finbert import distil_bert
 
+
+app = FastAPI()
+app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
+
 _nse = NSE()
 _news = News()
 senti_class = distil_bert.FinSentiment()
@@ -24,11 +29,6 @@ async def get_mood(news):
         return 0
     return mood / count
 
-app = FastAPI()
-app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory="app/templates")
-
-
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -39,7 +39,7 @@ async def get_overview(request:Request):
     return templates.TemplateResponse("overview.html", {"request": request, "highlights":hl})
 
 @app.get("/prediction", response_class=HTMLResponse)
-async def anlysis_page(request: Request):
+async def analysis_page(request: Request):
     name = "Business"
     news = _news.get_headlines("Business", predictor=senti_class.predict)
 
@@ -84,6 +84,7 @@ async def read_item(request: Request, symbol: str):
         "mood":mood,
         "news": news
     }
+    print(res)
     content = jsonable_encoder(res)
     return JSONResponse(content=content)
 
