@@ -12,17 +12,17 @@ jobs:
       fail-fast: false
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.9
+    - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
-        python-version: '3.9'
+        python-version: '3.11'
     - name: Install dependencies
       run: |
         pip install wheel
         pip install -r models/finbert/requirements.txt
     - name: Build package
       run: python models/finbert/setup.py bdist_wheel
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: finsenti-package
         path: dist/*.whl
@@ -33,17 +33,17 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v3
         with:
-          python-version: '3.9'
+          python-version: '3.11'
       - name: Install dependencies
         run: |
           pip install wheel
           pip install -r findata/requirements.txt
       - name: Build package
         run: python findata/setup.py bdist_wheel
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: findata-package
           path: dist/*.whl
@@ -55,17 +55,17 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v3
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: findata-package
       - run: mv *.whl api/
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: finsenti-package
       - run: mv *.whl api/
