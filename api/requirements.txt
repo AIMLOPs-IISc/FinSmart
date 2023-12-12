@@ -15,5 +15,5 @@ torch~=2.1.1
 datasets~=2.15.0
 scikit-learn
 #Local Libraries
-findata-1.0.2-py3-none-any.whl
-finbert-1.0.4-py3-none-any.whl
+findata -f .
+finbert -f .
