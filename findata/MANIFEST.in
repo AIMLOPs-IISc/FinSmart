@@ -1,8 +1,8 @@
 include *.csv
-recursive-include ./finbert/*
+recursive-include ./findata/*
 
-include ./finbert/data/FinancialNews_India_Sentiment.csv
-include ./finbert/VERSION
+include ./findata/data/company_list.csv
+include ./findata/VERSION
 
 include ./requirements.txt
 include ./LICENSE
@@ -11,5 +11,4 @@ exclude *.log
 exclude *.cfg
 
 recursive-exclude * __pycache__
-recursive-exclude * Checkpoints
 recursive-exclude * *.py[co]

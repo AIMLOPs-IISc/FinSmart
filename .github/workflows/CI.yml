@@ -40,12 +40,12 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        working-directory: ./findata
+        working-directory: ./findata/
         run: |
           pip install --upgrade build
           pip install -r requirements.txt
       - name: Build package
-        working-directory: ./findata
+        working-directory: ./findata/
         run: python -m build
       - uses: actions/upload-artifact@v3
         with:
