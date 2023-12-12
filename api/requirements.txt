@@ -15,5 +15,5 @@ torch
 datasets
 scikit-learn
 #Local Libraries
-findata -f .
-finbert -f .
+-f /api/ findata
+-f /api/ finbert
