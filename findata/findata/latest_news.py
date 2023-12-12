@@ -17,20 +17,39 @@ class News:
             if count <= 0:
                 break
             if len(res['title']) > 30:
+                temp = {}
                 count -= 1
+
                 if res['link']:
                     if not res['link'].startswith("https://"):
-                        res['link'] = "https://" + res['link']
+                        temp['link'] = "https://" + res['link']
+                    else:
+                        temp['link'] = res['link']
                 else:
-                    res['link'] = "#"
+                    temp['link'] = "#"
+
                 if res['img']:
                     if not res['img'].startswith("https://"):
-                        res['img'] = "https://" + res['img']
+                        temp['img'] = "https://" + res['img']
+                    else:
+                        temp['img'] = res['img']
                 else:
-                    res['img'] = "/static/sample_img.jpeg"
-                res["srno"] = str(max_count - count)
-                res["label"] = "na"
+                    temp['img'] = "/static/sample_img.jpeg"
+
+                if res['date']:
+                    temp['date'] = str(res['date'])
+                else:
+                    temp['date'] = "Date Not Specified"
+
+                if res['media']:
+                    temp['media'] = str(res['media'])
+                else:
+                    temp['media'] = "FinSmart"
+
+                temp["srno"] = str(max_count - count)
+                temp["label"] = "n/a"
                 if predictor:
-                    res["label"] = predictor(res["title"])
-                out.append(res)
+                    temp["label"] = predictor(res["title"])
+
+                out.append(temp)
         return out
