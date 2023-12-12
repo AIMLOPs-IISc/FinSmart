@@ -27,7 +27,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: finsenti-package
-        path: dist/*.whl
+        path: models/finbert/dist/*.whl
 
   data_build:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: findata-package
-          path: dist/*.whl
+          path: findata/dist/*.whl
 
   docker_build:
     needs: ["data_build", "bert_build"]
