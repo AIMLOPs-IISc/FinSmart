@@ -19,7 +19,7 @@ class News:
             if len(res['title']) > 30:
                 temp = {}
                 count -= 1
-
+                temp['title'] = res['title']
                 if res['link']:
                     if not res['link'].startswith("https://"):
                         temp['link'] = "https://" + res['link']
