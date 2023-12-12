@@ -68,6 +68,6 @@ jobs:
           name: findata-package
           path: findata/dist/*.whl
       - uses: actions/download-artifact@v3
-          with:
+        with:
           name: findata-package
       - run: mv *.whl api/
