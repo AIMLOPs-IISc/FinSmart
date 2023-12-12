@@ -1,4 +1,4 @@
-name: FIN SMART CI Pipeline
+name: FIN SMART CI Pipeline Test
 on:
   push:
     branches:
@@ -72,7 +72,8 @@ jobs:
 
   docker_build:
     needs: ["data_build", "bert_build"]
-    runs-on: production
+    runs-on: ubuntu-latest
+    environment: production
     strategy:
       fail-fast: false
     steps:
