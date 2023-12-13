@@ -10,7 +10,10 @@ class Predictor:
     def __init__(self):
         self.data_path = os.path.join(os.path.dirname(__file__), "data")
         self.model_path = os.path.join(os.path.dirname(__file__), "xgb_model.pkl")
-        self.model = pickle.load(open(self.model_path, "rb"))
+        try:
+            self.model = pickle.load(open(self.model_path, "rb"))
+        except FileNotFoundError:
+            self.model = None
         self.ndays = 20
         self.train_test_split_ratio = 0.8
         self.train_files =[]

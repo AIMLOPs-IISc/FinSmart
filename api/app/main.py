@@ -7,6 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from findata import NSE, News
 from finbert import distil_bert
+from xgbpred import xgb_stock
 
 
 app = FastAPI()
@@ -15,10 +16,13 @@ templates = Jinja2Templates(directory="app/templates")
 
 print("initializing NSE")
 _nse = NSE()
+_nse.datapath = "./nsedata"
 print("Initializing News")
 _news = News()
 print("Initializing Sentiment analysis")
 senti_class = distil_bert.FinSentiment()
+print("Initializing XGboost Prediction")
+_pred = xgb_stock.Predictor()
 print("Initialization Process Complete")
 
 async def get_mood(news):
@@ -98,16 +102,25 @@ async def read_item(request: Request, symbol: str):
 
 @app.get("/prediction/api/projection/{symbol}",response_class=JSONResponse)
 async def get_ticker_suggestion(request: Request, symbol: str):
+
     out = {k:None for k in nse.tickers()}
     content = jsonable_encoder(out)
     return JSONResponse(content=content)
 
 @app.get("/prediction/api/details/{symbol}",response_class=JSONResponse)
 async def get_ticker_suggestion(request: Request, symbol: str):
-    out = {
-
-    }
-    content = jsonable_encoder(out)
+    data = _nse.historical(symbol.lower(), 100)
+    score = 0
+    if len(data) != 0:
+        data = data[["CH_TIMESTAMP", "CH_TRADE_HIGH_PRICE",
+                     "CH_TRADE_LOW_PRICE",
+                     "CH_OPENING_PRICE",
+                     "CH_CLOSING_PRICE",
+                     "CH_TOT_TRADED_QTY"]]
+        data.columns = ["Date", "High", "Low", "Open", "Close", "Volume"]
+        out, score = _pred.next_n_pred(data, days=10)
+        print(score)
+    content = jsonable_encoder({"score":score})
     return JSONResponse(content=content)
 
 if __name__ == "__main__":

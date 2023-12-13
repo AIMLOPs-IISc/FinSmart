@@ -1,9 +1,9 @@
 include *.csv
-recursive-include ./xgbpredict/*
+recursive-include ./xgbpred/*
 
-include ./xgbpredict/data/*.csv
-include ./xgbpredict/VERSION
-include ./xgbpredict/*.pkl
+include ./xgbpred/data/*.csv
+include ./xgbpred/VERSION
+include ./xgbpred/*.pkl
 
 include ./requirements.txt
 include ./LICENSE

@@ -18,3 +18,4 @@ scikit-learn
 #Local Libraries
 findata-1.0.7-py3-none-any.whl
 finbert-1.0.7-py3-none-any.whl
+finbert-1.0.6-py3-none-any.whl
