@@ -76,7 +76,7 @@ jobs:
           path: findata/dist/*.whl
 
   docker_build:
-    needs: ["data_build", "bert_build"]
+    needs: ["data_build", "bert_build", "xgb_build"]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
