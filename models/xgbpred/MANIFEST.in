@@ -1,0 +1,15 @@
+include *.csv
+recursive-include ./xgbpredict/*
+
+include ./xgbpredict/data/*.csv
+include ./xgbpredict/VERSION
+include ./xgbpredict/*.pkl
+
+include ./requirements.txt
+include ./LICENSE
+include ./README.md
+exclude *.log
+exclude *.cfg
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
