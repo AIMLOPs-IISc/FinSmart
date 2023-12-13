@@ -4,11 +4,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from findata import NSE, News
 from finbert import distil_bert
 from xgbpred import xgb_stock
+import prometheus_client as prom
 
+r2_metric = prom.Gauge('xgbstockpred_r2_score', 'R2 score for random stock prediction')
+corr_metric = prom.Gauge('finbert_accuracy', "Accuracy of finbert model.")
 
 app = FastAPI()
 app.mount("/app/static", StaticFiles(directory="app/static"), name="static")
@@ -24,6 +27,18 @@ senti_class = distil_bert.FinSentiment()
 print("Initializing XGboost Prediction")
 _pred = xgb_stock.Predictor()
 print("Initialization Process Complete")
+
+
+def update_metrics():
+    r2 = _pred.evaluate()
+    acc = senti_class.metric()
+    r2_metric.set(r2)
+    corr_metric.set(acc)
+
+@app.get("/metrics")
+async def get_metrics():
+    update_metrics()
+    return Response(media_type="text/plain", content = prom.generate_latest())
 
 async def get_mood(news):
     mood = 0
