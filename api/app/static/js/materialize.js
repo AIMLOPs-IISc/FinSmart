@@ -12430,6 +12430,17 @@ function update_news(data) {
         link = document.getElementById("news-link-"+item["srno"]);
         link.innerHTML = item["media"]
         link.href = item["link"]
+        label = document.getElementById("label-"+item["srno"])
+        label.innerHTML = item["label"]
+        if (item["label"] == 'Positive'){
+            label.classList="new badge green"
+        }
+        else if (item["label"] == 'Negative'){
+            label.classList="new badge red"
+        }
+        else{
+            label.classList="new badge grey"
+        }
     })
     console.log("here calling...");
     load_sentiment(data["mood"]);

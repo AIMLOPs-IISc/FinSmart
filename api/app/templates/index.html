@@ -1,14 +1,36 @@
 {% extends "base.j2" %}
 {% block content %}
-    <h2>Personalized Financial Advisor using Large Language Model (LLM)</h2>
-    <p>The field of finance can be complex and overwhelming for individuals seeking personalised financial advice. In order to make informed decisions regarding investments, retirement planning, budgeting, and financial products, individuals often require guidance from financial experts.
-The aim of this project is to develop an Intelligent Financial Advisor powered by a Large Language Model (LLM) to provide personalised financial advice and guidance to individuals. By leveraging NLP and machine learning techniques, the Intelligent Financial Advisor will assist users in making informed financial decisions and achieving their financial goals.
-</p>
-<p>This complete analyser is based in <a href="https://www.nseindia.com" target="_blank">NSE</a> data, which uses LSTM for prediction based on past prices and LLM for summarizing and sentiment analysis of news.</p>
-<h3><a href="../overview">Stats Overview</a></h3>
-<p>Overview page contains market summary.</p>
-<h3>AI Predictor</h3>
-<p>This page is where prediction and news results are presented.</p>
-<h3>Team</h3>
-<p>Meet the team which brought to you Personal Finance Helper.</p>
+    <h2>Personalized Financial Advisor</h2>
+    <p>The field of finance can be complex and overwhelming for individuals seeking personalised financial advice.
+        In order to make informed decisions regarding investments, retirement planning, budgeting, and financial products,
+        individuals often require guidance from financial experts. The aim of this project is to develop an Intelligent
+        Financial Advisor powered by Machine learning  models and Large Language Models (LLM) to provide personalised
+        financial advice and guidance to individuals. By leveraging NLP and machine learning techniques, the Intelligent
+        Financial Advisor will assist users in making informed financial decisions and achieving their financial goals.
+
+        The primary objective of an AI-driven financial advisor is to help individuals and organisations make informed
+        financial decisions,  enabling real-time decision-making and continuous monitoring of financial markets.</p>
+
+    <p><a herf="#" target="_blank">Read Full Report Here.</a> </p>
+
+    <p>Like many things in life such a feat can't be achieved with just one tool, this project is an assorted set tools
+    to help individuals navigate the financial waters.
+    For This Project our target market is <a href="https://www.nseindia.com" target="_blank">NSE</a>. </p>
+    <h3><a href="../overview">Stats Overview</a></h3>
+    <p>This Page doesn't have any AI component yet, but our vision was to add AI stock recommendations here.
+    For now we fetch and show most interesting stocks from NSE Live.</p>
+    <h3><a href="../prediction">AI Predictor</a></h3>
+    This page is an interesting mixture of AI and required tools.
+    <ul>
+        <li>Tool: Auto Ticker selector helps you find your desired ticker by just typing two letters.</li>
+        <li>Tool: News aggregator automatically fetches 9 latest news for the company selected in ticker from google news.</li>
+        <li>AI: Our distilBERT based sentiment analysis tool just checks the sentiment of all headlines and shows for ease of user access.</li>
+        <li>Tool: Sentiment Gauge is just the numerical average of sentiments presented in a graphical format for understanding overall sentimet related to company in question based on collected news.</li>
+        <li>AI: Future Predictor, is an interesting mix of XGBoost and live data fetched from NSE. it is trained on 80 companies 10 year data to predict next 10 days of movement of given stock, based on past data fetched live by our tool.</li>
+    </ul>
+    <h3><a href="../shorten">What is it About</a></h3>
+    Oh yes, we don't have lot of time to read all news but to be on top of market one need to know what is going on. Here we Present
+    a T5 based summarizer, to help you save time.
+    <h3><a href="../team">Meet the team</a></h3>
+    <p>Meet the team which brought to you Personal Finance Helper.</p>
 {% endblock %}

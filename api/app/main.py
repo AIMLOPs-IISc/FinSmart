@@ -57,6 +57,10 @@ async def analysis_page(request: Request):
 async def read_teams(request: Request):
     return templates.TemplateResponse("team.html", {"request": request})
 
+@app.get("/shorten", response_class=HTMLResponse)
+async def read_teams(request: Request):
+    return templates.TemplateResponse("shorten.html", {"request": request})
+
 
 @app.get("/prediction/api/tickers",response_class=JSONResponse)
 async def get_ticker_suggestion(request: Request):

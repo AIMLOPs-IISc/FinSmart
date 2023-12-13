@@ -137,13 +137,14 @@ class NSE:
 
     def highlights(self, count=5):
         df = self.nsefetch('/api/equity-stockIndices?index=SECURITIES%20IN%20F%26O')
-        if len(df) == 0:
+        try:
+            df = df[["symbol", "open", "dayHigh", "dayLow", "lastPrice", "totalTradedVolume", "totalTradedValue", "pChange", 'yearHigh', 'yearLow']]
+            loosers = df.sort_values(by="pChange").head(count)
+            gainers = df.sort_values(by="pChange", ascending=False).head(count)
+            active_val = df.sort_values(by="totalTradedValue", ascending=False).head(count)
+            active_vol = df.sort_values(by="totalTradedVolume", ascending=False).head(count)
+            return {"top_loosers":loosers, "top_gainers":gainers, "most_active_by_value":active_val, "most_active_by_volume":active_vol}
+        except:
             return {}
-        df = df[["symbol", "open", "dayHigh", "dayLow", "lastPrice", "totalTradedVolume", "totalTradedValue", "pChange", 'yearHigh', 'yearLow']]
-        loosers = df.sort_values(by="pChange").head(count)
-        gainers = df.sort_values(by="pChange", ascending=False).head(count)
-        active_val = df.sort_values(by="totalTradedValue", ascending=False).head(count)
-        active_vol = df.sort_values(by="totalTradedVolume", ascending=False).head(count)
-        return {"top_loosers":loosers, "top_gainers":gainers, "most_active_by_value":active_val, "most_active_by_volume":active_vol}
 
 

@@ -28,11 +28,11 @@
           <div class="card-action">
             <a href="{{ key['link'] }}" target="_blank" id="news-link-{{ key['srno'] }}">{{ key['media'] }}</a>
               {% if key['label']=="Positive" %}
-                    <span class="new badge" data-badge-caption="">{{ key['label'] }}</span>
+                    <span id="label-{{ key['srno'] }}" class="new badge green" data-badge-caption="">{{ key['label'] }}</span>
               {% elif key['label']=="Negative" %}
-                    <span class="new badge red" data-badge-caption="">{{ key['label'] }}</span>
+                    <span id="label-{{ key['srno'] }}" class="new badge red" data-badge-caption="">{{ key['label'] }}</span>
               {% else %}
-                    <span class="new badge gray" data-badge-caption="">{{ key['label'] }}</span>
+                    <span id="label-{{ key['srno'] }}" class="new badge grey" data-badge-caption="">{{ key['label'] }}</span>
               {% endif %}
           </div>
       </div>
@@ -42,9 +42,4 @@
 </div>
 {% endblock %}
 
-{% block additional_js %}
-<script>
 
-</script>
-
-{% endblock %}
