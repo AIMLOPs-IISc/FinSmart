@@ -1,0 +1,9 @@
+# Data
+pandas
+#ML
+tensorflow
+transformers[torch]
+torch
+datasets
+scikit-learn
+rouge-score

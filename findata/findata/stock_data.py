@@ -41,7 +41,8 @@ class NSE:
         for fname in os.listdir(self.__data_path__):
             src = os.path.join(self.__data_path__, fname)
             dest = os.path.join(path, fname)
-            shutil.copyfile(src, dest)
+            if os.path.isfile(src):
+                shutil.copyfile(src, dest)
         self.__data_path__ = path
         self.stocks = pd.read_csv(os.path.join(self.__data_path__, "company_list.csv"))
 
@@ -79,11 +80,11 @@ class NSE:
 
     @staticmethod
     def update_local(dpath, df):
-        curr_df = pd.DataFrame
-        if df != pd.DataFrame():
+        curr_df = pd.DataFrame()
+        if len(df) != 0:
             if os.path.exists(dpath):
                 curr_df = pd.read_csv(dpath)
-                curr_df = curr_df.append(df, ignore_index=True, )
+                curr_df = pd.concat([curr_df, df])
                 curr_df = curr_df.drop_duplicates(subset =["CH_TIMESTAMP"], keep="last")
             else:
                 curr_df = df
@@ -99,7 +100,7 @@ class NSE:
         et = datetime.now()
         end_date = et.strftime("%Y-%m-%d")
         start_date = (et - timedelta(days=days)).strftime("%Y-%m-%d")
-        if df == pd.DataFrame():
+        if len(df) == 0:
             online = True
         else:
             online = ~((start_date in df["CH_TIMESTAMP"]) and (end_date in df["CH_TIMESTAMP"]))
@@ -129,7 +130,7 @@ class NSE:
                     "CH_TOT_TRADED_VAL"
                 ]
                 df = self.update_local(dpath, df[columns])
-        if df == pd.DataFrame():
+        if len(df) == 0:
             return df
         mask = (df["CH_TIMESTAMP"] > start_date) & (df["CH_TIMESTAMP"] <= end_date)
         return df.loc[mask]
@@ -137,13 +138,14 @@ class NSE:
 
     def highlights(self, count=5):
         df = self.nsefetch('/api/equity-stockIndices?index=SECURITIES%20IN%20F%26O')
-        if len(df) == 0:
+        try:
+            df = df[["symbol", "open", "dayHigh", "dayLow", "lastPrice", "totalTradedVolume", "totalTradedValue", "pChange", 'yearHigh', 'yearLow']]
+            loosers = df.sort_values(by="pChange").head(count)
+            gainers = df.sort_values(by="pChange", ascending=False).head(count)
+            active_val = df.sort_values(by="totalTradedValue", ascending=False).head(count)
+            active_vol = df.sort_values(by="totalTradedVolume", ascending=False).head(count)
+            return {"top_loosers":loosers, "top_gainers":gainers, "most_active_by_value":active_val, "most_active_by_volume":active_vol}
+        except:
             return {}
-        df = df[["symbol", "open", "dayHigh", "dayLow", "lastPrice", "totalTradedVolume", "totalTradedValue", "pChange", 'yearHigh', 'yearLow']]
-        loosers = df.sort_values(by="pChange").head(count)
-        gainers = df.sort_values(by="pChange", ascending=False).head(count)
-        active_val = df.sort_values(by="totalTradedValue", ascending=False).head(count)
-        active_vol = df.sort_values(by="totalTradedVolume", ascending=False).head(count)
-        return {"top_loosers":loosers, "top_gainers":gainers, "most_active_by_value":active_val, "most_active_by_volume":active_vol}
 
 
