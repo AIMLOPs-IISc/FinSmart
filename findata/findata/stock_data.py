@@ -41,7 +41,8 @@ class NSE:
         for fname in os.listdir(self.__data_path__):
             src = os.path.join(self.__data_path__, fname)
             dest = os.path.join(path, fname)
-            shutil.copyfile(src, dest)
+            if os.path.isfile(src):
+                shutil.copyfile(src, dest)
         self.__data_path__ = path
         self.stocks = pd.read_csv(os.path.join(self.__data_path__, "company_list.csv"))
 
