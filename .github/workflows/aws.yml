@@ -40,11 +40,53 @@ jobs:
       with:
         name: finsenti-package
         path: models/finbert/dist/*.whl
-    - uses: actions/download-artifact@v3
+
+  t5_build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
       with:
-        name: finsenti-package
-    - run: mv *.whl api/
-        
+        python-version: '3.9'
+    - name: Install dependencies
+      working-directory: ./models/t5summ
+      run: |
+        pip install --upgrade build
+        pip install -r requirements.txt
+    - name: Build package
+      working-directory: ./models/t5summ
+      run: python -m build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: finsumm-package
+        path: models/t5summ/dist/*.whl
+
+  xgb_build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      working-directory: ./models/xgbpred
+      run: |
+        pip install --upgrade build
+        pip install -r requirements.txt
+    - name: Build package
+      working-directory: ./models/xgbpred
+      run: python -m build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: finpred-package
+        path: models/xgbpred/dist/*.whl
+
   data_build:
     runs-on: ubuntu-latest
     strategy:
@@ -67,14 +109,10 @@ jobs:
         with:
           name: findata-package
           path: findata/dist/*.whl
-      - uses: actions/download-artifact@v3
-        with:
-          name: findata-package
-      - run: mv *.whl api/
 
   deploy:
     name: Deploy
-    needs: ["data_build", "bert_build"]
+    needs: ["data_build", "bert_build", "xgb_build", "t5_build"]
     runs-on: ubuntu-latest
     environment: production
 
@@ -91,11 +129,22 @@ jobs:
         
     - uses: actions/download-artifact@v3
       with:
-        name: finsenti-package
+        name: findata-package
     - run: mv *.whl api/
+
     - uses: actions/download-artifact@v3
       with:
-        name: findata-package
+        name: finsenti-package
+    - run: mv *.whl api/
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: finpred-package
+    - run: mv *.whl api/
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: finsumm-package
     - run: mv *.whl api/
     
     - name: Login to Amazon ECR
