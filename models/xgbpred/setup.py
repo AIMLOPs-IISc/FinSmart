@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from pathlib import Path
-
+import os
 from setuptools import find_packages, setup
 
 # Package meta-data.
@@ -22,6 +22,7 @@ long_description = DESCRIPTION
 
 # Load the package's VERSION file as a dictionary.
 about = {}
+data = []
 ROOT_DIR = Path(__file__).resolve().parent
 print(ROOT_DIR)
 PACKAGE_DIR = ROOT_DIR / 'xgbpred'
@@ -36,6 +37,9 @@ with open(PACKAGE_DIR / "VERSION" , 'r') as f:
 with open(PACKAGE_DIR / "VERSION" , 'w') as f:
     f.write(about["__version__"])
 
+for fname in os.listdir(PACKAGE_DIR / "data"):
+    if fname.endswith("_price.csv"):
+        data.append(f"data/{fname}")
 
 # What packages are required for this module to be executed?
 def list_reqs(fname="requirements.txt"):
@@ -53,6 +57,10 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     packages=find_packages(),
+    package_data={"xgbpred": [
+        "VERSION",
+        "xgb_model.pkl"
+    ] + data},
     install_requires=list_reqs(),
     extras_require={},
     include_package_data=True,

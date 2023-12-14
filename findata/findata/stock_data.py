@@ -79,11 +79,11 @@ class NSE:
 
     @staticmethod
     def update_local(dpath, df):
-        curr_df = pd.DataFrame
-        if df != pd.DataFrame():
+        curr_df = pd.DataFrame()
+        if len(df) != 0:
             if os.path.exists(dpath):
                 curr_df = pd.read_csv(dpath)
-                curr_df = curr_df.append(df, ignore_index=True, )
+                curr_df = pd.concat([curr_df, df])
                 curr_df = curr_df.drop_duplicates(subset =["CH_TIMESTAMP"], keep="last")
             else:
                 curr_df = df
@@ -99,7 +99,7 @@ class NSE:
         et = datetime.now()
         end_date = et.strftime("%Y-%m-%d")
         start_date = (et - timedelta(days=days)).strftime("%Y-%m-%d")
-        if df == pd.DataFrame():
+        if len(df) == 0:
             online = True
         else:
             online = ~((start_date in df["CH_TIMESTAMP"]) and (end_date in df["CH_TIMESTAMP"]))
@@ -129,7 +129,7 @@ class NSE:
                     "CH_TOT_TRADED_VAL"
                 ]
                 df = self.update_local(dpath, df[columns])
-        if df == pd.DataFrame():
+        if len(df) == 0:
             return df
         mask = (df["CH_TIMESTAMP"] > start_date) & (df["CH_TIMESTAMP"] <= end_date)
         return df.loc[mask]

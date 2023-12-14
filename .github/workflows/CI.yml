@@ -29,6 +29,29 @@ jobs:
         name: finsenti-package
         path: models/finbert/dist/*.whl
 
+  t5_build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      working-directory: ./models/t5summ
+      run: |
+        pip install --upgrade build
+        pip install -r requirements.txt
+    - name: Build package
+      working-directory: ./models/t5summ
+      run: python -m build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: finsumm-package
+        path: models/t5summ/dist/*.whl
+
   xgb_build:
     runs-on: ubuntu-latest
     strategy:
@@ -100,6 +123,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: finpred-package
+      - run: mv *.whl api/
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: finsumm-package
       - run: mv *.whl api/
 
       - name: Login to Docker hub

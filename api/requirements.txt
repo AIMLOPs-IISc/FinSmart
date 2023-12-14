@@ -3,6 +3,7 @@ requests
 urllib3==1.26.6
 pandas
 numpy
+openpyxl
 # Web app
 fastapi
 uvicorn
@@ -15,7 +16,9 @@ evaluate
 torch
 datasets
 scikit-learn
+#watch
+prometheus-client
 #Local Libraries
-findata-1.0.7-py3-none-any.whl
-finbert-1.0.7-py3-none-any.whl
-finbert-1.0.6-py3-none-any.whl
+#findata-1.0.7-py3-none-any.whl
+#finbert-1.0.7-py3-none-any.whl
+#finbert-1.0.6-py3-none-any.whl

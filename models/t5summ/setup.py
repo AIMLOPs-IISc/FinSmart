@@ -6,8 +6,8 @@ from pathlib import Path
 from setuptools import find_packages, setup
 
 # Package meta-data.
-NAME = 'xgbpred'
-DESCRIPTION = "Analyse sentiment of a sentence related to Financial market."
+NAME = 't5summ'
+DESCRIPTION = "Summarize the news."
 EMAIL = "------"
 AUTHOR = "----------"
 REQUIRES_PYTHON = ">=3.9.0"
@@ -24,7 +24,7 @@ long_description = DESCRIPTION
 about = {}
 ROOT_DIR = Path(__file__).resolve().parent
 print(ROOT_DIR)
-PACKAGE_DIR = ROOT_DIR / 'xgbpred'
+PACKAGE_DIR = ROOT_DIR / 't5summ'
 with open(PACKAGE_DIR / "VERSION" , 'r') as f:
     _version = f.read().strip()
     _verlist = _version.split(".")
@@ -53,6 +53,10 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     packages=find_packages(),
+    package_data={"t5summ": [
+        "VERSION",
+        "data/text_with_summary.xlsx"
+    ]},
     install_requires=list_reqs(),
     extras_require={},
     include_package_data=True,

@@ -12473,32 +12473,58 @@ Plotly.newPlot('senti_div', data, layout);
 }
 
 function load_chart() {
-console.log("here")
-    var trace1 = {
-      x: [1, 2, 3, 4],
-      y: [10, 15, 13, 17],
-      mode: 'markers',
-      name: 'Stock Price'
-    };
-
-    var trace2 = {
-      x: [2, 3, 4, 5, 6, 7, 8],
-      y: [14.5, 13.2, 16.9, 16, 5, 11, 9],
-      mode: 'lines',
-      name: 'Prediction'
-    };
-
-    var data = [trace1, trace2];
-
+    var url = document.baseURI
+    var value = document.getElementById("symbol-input").value
+    url = url.concat("/api/projection/")
+    url = url.concat(value)
+    console.log(url)
+    var score = document.getElementById("pred_score")
     var layout = {
-      title: 'Title of the Graph',
+      title: 'AI Projection',
       xaxis: {
-        title: 'Date Range'
+        title: 'Date'
       },
       yaxis: {
         title: 'Stock Price'
       }
     };
 
-    Plotly.newPlot('pred_div', data, layout);
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+        },
+    })
+       .then(response => response.json())
+       .then(resp => {
+            Plotly.newPlot('pred_div', resp["data"], layout);
+            score.innerHTML = "Prediction R2 Score: " + resp["score"].toString()
+       })
 }
+
+function summerize(){
+    var url = document.baseURI
+    var summ = document.getElementById("summary")
+    var value = document.getElementById("icon_prefix2").value
+    url = url.concat("/api/summarize")
+    console.log(value)
+    console.log(url)
+    var preloader = document.getElementById("preloader")
+    preloader.classList = "preloader-wrapper big active"
+    summ.innerHTML = "Generating Summary"
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({"text": value})
+    })
+       .then(response => response.json())
+       .then(data => {
+       preloader.classList = "preloader-wrapper big"
+       summ.innerHTML = data["summary"]
+       })
+
+}
+
