@@ -1,9 +1,9 @@
 {
-    "family": "sample-fargate",
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-1:001324618448:task-definition/sample-fargate:11",
     "containerDefinitions": [
         {
             "name": "finsmart",
-            "image": "001324618448.dkr.ecr.ap-southeast-1.amazonaws.com/iisc_capstone_group6:becedfe08fadeb28ea2f710381cac6c59345cb2a",
+            "image": "001324618448.dkr.ecr.ap-southeast-1.amazonaws.com/iisc_capstone_group6",
             "cpu": 0,
             "portMappings": [
                 {
@@ -18,11 +18,40 @@
             "volumesFrom": []
         }
     ],
+    "family": "sample-fargate",
     "executionRoleArn": "arn:aws:iam::001324618448:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
+    "revision": 11,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "ecs.capability.increased-task-cpu-limit"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
     "cpu": "8192",
-    "memory": "32768"
+    "memory": "32768",
+    "registeredAt": "2023-12-15T15:27:24.417Z",
+    "registeredBy": "arn:aws:iam::001324618448:user/iisc_capstone6",
+    "tags": []
 }
